@@ -3,16 +3,16 @@
 {% block title %}In Cleaner. Создать заказ{% endblock title%}
 
 {% block content %}
-<div class="pt-4 pl-2 text-white flex justify-evenly md:justify-center bg-sky-800">
+<div class="bg-sky-800 w-80 h-auto rounded-md ml-12 mt-12">
     <div>
-        <h2>Создать заказ</h2>
+        <h2 class="ml-4 mt-1 text-white text-xl">Создать заказ</h2>
     </div>
 
     <form action="{% url 'create-order' %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.as_p }}
 
-        <button class="btn" type="submit">Create</button>
+        <button class="btn btn-xs  bg-white text-sky-800 w-24 h-6 p-1 md:btn-lg md:w-36 mb-2 mt-2 ml-28 md:ml-24">Создать</button>
     </form>
 </div>
 {% endblock content %}

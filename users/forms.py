@@ -15,34 +15,35 @@ class ReportForm(forms.ModelForm):
 
 class OrderForm(forms.ModelForm):
     description = forms.CharField(
+        label="",
         widget=forms.Textarea(
             attrs={
-                'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-                'placeholder': 'Описание'
+                'class': ' ml-1 shadow appearance-none border rounded w-72 h-14 text-white leading-tight focus:outline-none ',
+                
             }
         )
     )
     price = forms.DecimalField(
         widget=forms.NumberInput(
             attrs={
-                'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-                'placeholder': 'Цена'
+                'class': 'shadow appearance-none border rounded w-12 text-white leading-tight focus:outline-none focus:shadow-outline',
+                
             }
         )
     )
     address = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-                'placeholder': 'Адрес'
+                'class': 'shadow appearance-none border rounded w-24  text-white leading-tight focus:outline-none focus:shadow-outline',
+               
             }
         )
     )
     phone = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
-                'placeholder': 'Телефон'
+                'class': 'shadow appearance-none border rounded w-24  text-white leading-tight focus:outline-none focus:shadow-outline',
+                
             }
         )
     )
@@ -51,7 +52,7 @@ class OrderForm(forms.ModelForm):
         empty_label='Выбрать специальность',
         widget=forms.Select(
             attrs={
-                'class': 'shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline',
+                'class': 'shadow appearance-none border rounded w-32 text-white leading-tight focus:outline-none focus:shadow-outline',
             }
         )
     )
@@ -85,3 +86,5 @@ class CustomUserChangeForm(UserChangeForm):
     class Meta:
         model = CustomUser
         fields = ('username', 'email')
+        
+

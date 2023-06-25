@@ -15,7 +15,6 @@ class ReportForm(forms.ModelForm):
 
 class OrderForm(forms.ModelForm):
     description = forms.CharField(
-        label="",
         widget=forms.Textarea(
             attrs={
                 'class': ' ml-1 shadow appearance-none border rounded w-72 h-14 text-white leading-tight focus:outline-none ',

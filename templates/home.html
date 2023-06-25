@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+
+{% block title %}In Cleaner. Домашняя страница{% endblock %}
+
+{% block content %}
+<div class="w-full px-4 mt-2 ">
+    <div>
+        {% if user.is_authenticated %}
+        {% if not user.is_worker %}
+        <div class="flex justify-between ">
+            <p class="text-sky-800 mt-1  leading-2">Привет, {{ user.username }}!</p>
+                <div class=" mb-1 mr-1 flex justify-end">
+                    <p><a class="btn ml-3 rounded w-min h-2 btn-xs bg-sky-800  text-white" href="{% url 'logout' %}">Выйти</a></p></div>
+                </div>
+        <h1 class="text-2xl font-bold text-sky-800">Найди исполнителя</h1>
+    </div>
+</div>
+<div class="badges ml-3 mt-1">
+    <div class="badge badge-outline font-bold btn-outline text-sky-800">Все</div>
+    {% for specialty in specialties %}
+    <div class="badge badge-outline">{{ specialty.name }}</div>
+    {% endfor %}
+</div>
+{% for worker in workers%}
+<div class="rounded-full flex justify-between bg-base-300 w-96 h-12 mt-3 ml-1 text-lg pl-2 text-sky-800 ">
+    <div class="w-10 h-10 mt-1 rounded-full p-2">
+        <img src="{{ worker.profile.photo.url }}" alt="User Photo" class="rounded-full w-7 h-7">
+    </div>
+    <div class="h-12 flex flex-col items-start justify-center leading-none">
+        <p>{{ worker.username }}</p>
+        <p class="text-sm ">{{ worker.profile.specialty.name }}</p>
+    </div>
+    <div class="rating ml-6 mr-2 ">
+        <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-300 pb-12 "/>
+        <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-300 pb-12" checked/>
+        <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-300 pb-12"/>
+        <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-300 pb-12"/>
+        <input type="radio" name="rating-2" class="mask mask-star-2 bg-yellow-300 pb-12"/>
+    </div>
+</div>
+{% endfor %}
+
+
+<a class="btn btn-sm bg-sky-800 btn-active text-white ml-28 mt-3 btn-neutraltext-sm p-1"
+   href="{% url 'create-order' %}">Создать новый заказ
+</a>
+{% else %}
+
+    <div class="flex justify-between ">
+        <p class="text-sky-800 mt-1  leading-2">Привет, {{ user.username }}!</p>
+
+
+            <div class=" mb-1 mr-1 flex justify-end">
+                <img src="{{ user.profile.photo.url }}" alt="User Photo" class="rounded-full w-7 h-7 ">
+                <p><a class="btn ml-3 rounded w-min h-2 btn-xs bg-sky-800  text-white" href="{% url 'logout' %}">Выйти</a></p></div>
+
+            </div>
+
+        {% if user.profile.specialty %}
+        <h1 class="text-2xl font-bold  text-sky-800 leading-none">Найди работу </h1>
+        <p class="text-xs text-sky-800 w-min mt-1 ml-0.5">Категория:{{user.profile.specialty}}</p>
+
+    {% for order in orders%}
+
+
+    <div class="  p-1  bg-base-300 w-82 mb-2 h-38 mt-1 rounded-md md:h-48 md:w-3/4">
+        <div class="flex justify-between">
+            <div class="font-normal text-xl   text-sky-800 leading-none">Заказ {{order.id}}
+                <p class="text-xs text-sky-800 font-extralight ml-0.5 leading-none"> {{order.specialty}}</p></div>
+            <p class="mr-6 ">{{ order.user.username }}</p>
+        </div>
+        <div class="flex justify-start mt-1 bg-white rounded w-max h-min ">
+            <p class="text-sm ml-0.5 font-medium leading-none mr-1 p-0.5">Описание:
+                <p class="text-sm text-sky-800 leading-none p-0.5">{{ order.description }}</p>
+            </p>
+        </div>
+        <div class="flex justify-start mt-2 bg-white rounded w-max h-min ">
+            <p class="text-sm ml-0.5 font-medium leading-none mr-1 p-0.5">Адрес:
+                <p class="text-sm text-sky-800 leading-none p-0.5">{{ order.address }}</p>
+            </p>
+        </div>
+        <div class="flex mt-2 justify-start  bg-white rounded w-max h-min ">
+            <p class="text-sm ml-0.5 font-medium leading-none mr-1 p-0.5">Телефон:
+                <p class="text-sm text-sky-800 leading-none p-0.5">{{ order.phone }}</p>
+            </p>
+        </div>
+        <div class="flex justify-start mt-2 bg-white rounded w-max h-min ">
+            <p class="text-sm ml-0.5 font-medium leading-none mr-1 p-0.5">Цена:
+                <p class="text-sm text-sky-800 leading-none p-0.5">{{ order.price }} тг.</p>
+            </p>
+        </div>
+        <div class="flex justify-center mt-2">
+            <a href="#"><span
+                    class="inline-block bg-sky-800 text-white rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Принять заказ</span></a>
+        </div>
+    </div>
+    {% endfor %}
+
+{% else %}
+<div class="alert h-3 shadow-lg flex justify-between">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 font-extrabold text-sky-800">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+      </svg>
+    <h1 class="leading-none  mr-3 text-xs">Укажите свою специальность в профиле!</h1>
+</div>
+{% endif %}
+{% endif %}
+{% else %}
+    <div class="flex justify-center mt-72">
+        <button class="btn rounded-md w-min h-1 btn-sm bg-sky-800 ">
+            <a href="{% url 'login' %}" class="text-xs text-white">Войти</a>
+        </button>
+    </div>
+    <div class="flex justify-center">
+        <button class="btn rounded-md w-min h-1 btn-sm bg-sky-800 ">
+            <a href="{% url 'signup' %}" class="text-xs text-white">Зарегистрироваться</a>
+        </button>
+    </div>
+
+
+{% endif %}
+{% endblock %}

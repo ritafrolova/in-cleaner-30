@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}In Cleaner. Отчет{% endblock %}
+
+{% block content %}
+<h2>Отчет №{{ report.id }}</h2>
+<p>Заказ: {{ report.order }}</p>
+<p>Фото 1: <img src="{{ report.photo1.url }}" alt="Фото 1"></p>
+<p>Фото 2: <img src="{{ report.photo2.url }}" alt="Фото 2"></p>
+<p>Фото 3: <img src="{{ report.photo3.url }}" alt="Фото 3"></p>
+<p>Комментарий: {{ report.comment }}</p>
+<a class="btn btn-sm bg-sky-800 btn-active text-white ml-24 mt-3 btn-neutraltext-sm p-1"
+   href="{% url 'confirm-order' report.order_id %}">Подтвердить заказ
+</a>
+{% endblock content %}

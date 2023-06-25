@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}In Cleaner. Создать заказ{% endblock title%}
+
+{% block content %}
+<div class="pt-4 pl-2 text-white flex flex-col md:justify-center bg-sky-800">
+    <div>
+        <h2>Мои заказы</h2>
+    </div>
+    {% if user.is_worker %}
+    {% for order in orders%}
+    <div class="max-w-sm bg-white rounded overflow-hidden shadow-lg mb-2">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl text-black mb-2">Заказ №{{order.id}}. {{order.specialty}}</div>
+
+            <p class="text-gray-700 text-base">
+                юзер - {{ order.user.username }}
+            </p>
+            <p class="text-gray-700 text-base">
+                {{ order.price }} тг.
+            </p>
+            <p class="text-gray-700 text-base">
+                адрес - {{ order.address }}
+            </p>
+            <p class="text-gray-700 text-base">
+                телефон - {{ order.phone }}
+            </p>
+            <p class="text-gray-700 text-base">
+                {{ order.description }}
+            </p>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            {% if order.is_confirmed %}
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Заказ выполнен</span>
+            {% else %}
+                {% if order.is_done %}
+                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Ожидание подтверждения</span>
+                {% else %}
+                    {% if order.is_accepted %}
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Выполняется</span>
+                    <a href="{% url 'create-report' order.id %}">
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Отправить отчет</span>
+                    </a>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    {% else %}
+    {% for order in orders%}
+    <div class="max-w-sm bg-white rounded overflow-hidden shadow-lg mb-2">
+        <div class="px-6 py-4">
+            <div class="font-bold text-xl text-black mb-2">Заказ №{{order.id}}. {{order.specialty}}</div>
+            <p class="text-gray-700 text-base">
+                {{ order.description }}
+            </p>
+        </div>
+        <div class="px-6 pt-4 pb-2">
+            {% if order.is_confirmed %}
+            <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Заказ выполнен</span>
+            {% else %}
+                {% if order.is_done %}
+                <a href="{% url 'show-report' order.report_id %}">
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Посмотреть отчет</span>
+                </a>
+                {% else %}
+                    {% if order.is_accepted %}
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Выполняется</span>
+                    <a href="{% url 'create-report' order.id %}">
+                        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Отправить отчет</span>
+                    </a>
+                    {% else %}
+                    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">Поиск исполнителя</span>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+    {% endif %}
+</div>
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}In Cleaner. Создать заказ{% endblock title%}
+
+{% block content %}
+<form method="post">
+  {% csrf_token %}
+  {{ form.non_field_errors }}
+
+  <div class="mb-4">
+    {{ form.description.label_tag }}
+    {{ form.description }}
+    {% if form.description.errors %}
+      <div class="text-red-500">{{ form.description.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div class="mb-4">
+    {{ form.price.label_tag }}
+    {{ form.price }}
+    {% if form.price.errors %}
+      <div class="text-red-500">{{ form.price.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div class="mb-4">
+    {{ form.address.label_tag }}
+    {{ form.address }}
+    {% if form.address.errors %}
+      <div class="text-red-500">{{ form.address.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div class="mb-4">
+    {{ form.phone.label_tag }}
+    {{ form.phone }}
+    {% if form.phone.errors %}
+      <div class="text-red-500">{{ form.phone.errors }}</div>
+    {% endif %}
+  </div>
+
+  <div class="mb-4">
+    {{ form.specialty.label_tag }}
+    {{ form.specialty }}
+    {% if form.specialty.errors %}
+      <div class="text-red-500">{{ form.specialty.errors }}</div>
+    {% endif %}
+  </div>
+
+  <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
+</form>
+
+{% endblock content %}
